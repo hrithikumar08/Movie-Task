@@ -1,0 +1,9 @@
+{% func getUserNameById(userId) %}
+    {% set user = app.user.find(userId) %}
+
+    {% if user %}
+        {{ user.name }}
+    {% else %}
+        ''
+    {% endif %}
+{% endfunc %}

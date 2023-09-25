@@ -1,0 +1,24 @@
+framework:
+    router:
+        utf8: true
+
+        # Configure how to generate URLs in non-HTTP contexts, such as CLI commands.
+        # See https://symfony.com/doc/current/routing.html#generating-urls-in-commands
+        #default_uri: http://localhost
+
+when@prod:
+    framework:
+        router:
+            strict_requirements: null
+
+# # Edit movie route
+# edit_movie:
+#     path: /admin/movie/{id}/edit
+#     methods: GET|POST
+#     name: edit_movie
+
+# # Delete movie route
+# delete_movie:
+#     path: /admin/movie/{id}/delete
+#     methods: DELETE
+#     name: delete_movie            

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+	<head>
+
+		<meta
+		charset="UTF-8">
+		{# <title>{% block title %}Welcome!{% endblock %}</title> #}
+		<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+		<link
+		rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+		{# {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
+        {% endblock %}
+
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+        {% endblock %} #}
+		<style>
+			.rating {
+				cursor: pointer;
+			}
+
+			.star {
+				font-size: 24px;
+			}
+
+			.rated {
+				color: orange;
+			}
+		</style>
+
+	</head>
+	<body>
+
+		{% block body %}{% endblock %}
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+		<script>
+			$(document).ready(function () {
+                $('.interactive-rating .star').on('click', function () {
+                var rating = $(this).data('rating');
+                $('#interactive_rating').val(rating); // Set the hidden input value to the selected rating
+                $('.interactive-rating .star').removeClass('rated');
+                $(this).prevAll().addBack().addClass('rated'); // Highlight the selected and previous stars
+                });
+
+                $('.interactive-rating .star').hover(function () {
+                var rating = $(this).data('rating');
+                $('.interactive-rating .star').removeClass('rated');
+                $(this).prevAll().addBack().addClass('rated'); // Highlight the hovered and previous stars
+                }, function () { // Remove the rating when mouse leaves
+                $('.interactive-rating .star').removeClass('rated');
+                var selectedRating = $('#interactive_rating').val();
+                if (selectedRating !== "") { // Highlight the selected stars if a rating is already selected
+                $('.interactive-rating .star[data-rating="' + selectedRating + '"]').prevAll().addBack().addClass('rated');
+                }
+                });
+                });
+		</script>
+		<script>
+			function toggleHideItem() {
+                const hideItem = document.getElementById('hide-item');
+                hideItem.classList.toggle('d-none'); // Add or remove the 'd-none' class to hide/show the element
+                }
+		</script>
+
+		<script>
+			function openModal(modalId) {
+                $('#' + modalId).modal('show');
+            }
+
+            function closeModal(modalId) {
+                var modal = document.getElementById(modalId);
+                modal.style.display = "none";
+            }
+		</script>
+
+	</body>
+</html>

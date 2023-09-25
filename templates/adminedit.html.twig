@@ -1,0 +1,124 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<header>
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<div class="container-fluid">
+				<button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+					<i class="fas fa-bars"></i>
+				</button>
+
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<a class="navbar-brand mt-2 mt-lg-0" href="#">
+						<img src="https://mdbcdn.b-cdn.net/img/logo/mdb-transaprent-noshadows.webp" height="15" alt="IMDB Logo" loading="lazy"/>
+					</a>
+					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+						<li class="nav-item">
+							<a class="nav-link" href="#">Dashboard</a>
+						</li>
+					</ul>
+				</div>
+
+				<div class="d-flex align-items-center">
+					<a class="text-reset me-3" href="#">
+						<i class="fas fa-shopping-cart"></i>
+					</a>
+
+					<div class="dropdown">
+						<span>Hi !!</span>
+						{# {{ userName}}  #}
+					</div>
+				</div>
+			</div>
+		</nav>
+	</header>
+	<div class="container">
+		<h1>User Comment & Rating Details</h1>
+		<div class="row" id="show-item">
+			<div class="col-lg-12 mt-3">
+				<table id="example1" class="table table-bordered table-striped" style="width:100%">
+					<thead id="new1">
+						<tr style="background-color:#cbefd4;">
+							<th class="first_num-head" style="">#<a style="cursor:default;">
+									<i class="fa fa-fw fa-question-circle" title="#"></i>
+								</a>
+							</th>
+
+							<th class="first-head" style="">Rating<a style="cursor:default;">
+									<i class="fa fa-fw fa-question-circle" title="Rating"></i>
+								</a>
+							</th>
+
+							<th class="eleve-head" style="">User<a style="cursor:default;">
+									<i class="fa fa-fw fa-question-circle" title="User"></i>
+								</a>
+							</th>
+
+							<th class="twelve-head" style="">Movie<a style="cursor:default;">
+									<i class="fa fa-fw fa-question-circle" title="Movie"></i>
+								</a>
+							</th>
+
+							<th class="second-head" style="">Comment<a style="cursor:default;">
+									<i class="fa fa-fw fa-question-circle" title="Comment"></i>
+								</a>
+							</th>
+
+							<th class="third-head" style="">Comment Date<a style="cursor:default;">
+									<i class="fa fa-fw fa-question-circle" title="Added Date"></i>
+								</a>
+							</th>
+
+							<th class="third-head" style="">Edit Details<a style="cursor:default;">
+									<i class="fa fa-fw fa-question-circle" title="Edit Details"></i>
+								</a>
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for movieRating in movieRatings %}
+							<tr class="count_me">
+								<td class="first_num-col">{{ movieRating.ratingId }}</td>
+								<td class="fourth-col">{{ movieRating.rating }} Star</td>
+								<td class="first-col">{{ userNames[movieRating.userId] }}</td>
+								<td class="eleve-col">{{ movieNames[movieRating.movieId] }}</td>
+								<td class="twelve-col">{{ movieRating.comment }}</td>
+								<td class="second-col">{{ movieRating.commentDate|date('Y-m-d H:i:s')  }}</td>
+								<td class="third-col">
+									<form action="{{ path('admin_edit_submit', {'id': movieRating.ratingId}) }}" method="POST">
+										<input type="text" name="rating" value="{{ movieRating.rating }}">
+										{# <input type="text" name="userId" value="{{ movieRating.userId }}">
+										<input type="text" name="movieId" value="{{ movieRating.movieId }}"> #}
+
+										<select name="movieId">
+											{# <option value="{{ movie.directorId }}">{{ directorNames[movie.directorId] }}</option> #}
+											{% for movie in movies %}
+
+												<option value="{{ movie.getMovieId() }}" {% if movie.getMovieId() == movieRating.movieId %} selected {% endif %}>{{ movie.getTitle() }}</option>
+
+											{% endfor %}
+										</select>
+										<select	name="userId">
+											{# <option value="{{ movie.categoryId }}">{{ categoryNames[movie.categoryId] }}</option> #}
+											{% for user in users %}
+
+												<option value="{{ user.getId() }}" {% if user.getId() == movieRating.userId %} selected {% endif %}>{{ user.getName() }}</option>
+
+											{% endfor %}
+										</select>
+
+
+										<input type="text" name="comment" value="{{ movieRating.comment }}">
+										<input type="date" name="commentDate" value="{{ movieRating.commentDate.format('Y-m-d') }}">
+										<button type="submit" class="btn btn-primary">Edit</button>
+									</form>
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}

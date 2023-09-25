@@ -1,0 +1,313 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<header>
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<div class="container-fluid">
+				<button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+					<i class="fas fa-bars"></i>
+				</button>
+
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<a class="navbar-brand mt-2 mt-lg-0" href="#">
+						<img src="https://mdbcdn.b-cdn.net/img/logo/mdb-transaprent-noshadows.webp" height="15" alt="IMDB Logo" loading="lazy"/>
+					</a>
+					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+						<li class="nav-item">
+							<a class="nav-link" href="#">Dashboard</a>
+						</li>
+					</ul>
+				</div>
+
+				<div class="d-flex align-items-center">
+					<a class="text-reset me-3" href="#">
+						<i class="fas fa-shopping-cart"></i>
+					</a>
+
+					<div class="dropdown">
+						<span>Hi {{ userName}} !!</span>
+					</div>
+				</div>
+			</div>
+		</nav>
+	</header>
+	<section>
+		<div class="modal" id="my-modal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Add New Movie</h5>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+
+					<div class="modal-body">
+						<div class="row">
+							<div class="col-lg-12 mt-3">
+								{{ form_start(movieform) }}
+								<div class="form-group">
+									{{ form_label(movieform.title) }}
+									{{ form_widget(movieform.title) }}
+								</div>
+								<div class="form-group">
+									{{ form_label(movieform.descript) }}
+									{{ form_widget(movieform.descript) }}
+								</div>
+								<div class="form-group">
+									{{ form_label(movieform.budget) }}
+									{{ form_widget(movieform.budget) }}
+								</div>
+								<div class="form-group">
+									{{ form_label(movieform.director_id) }}
+									{{ form_widget(movieform.director_id) }}
+								</div>
+								<div class="form-group">
+									{{ form_label(movieform.category_id) }}
+									{{ form_widget(movieform.category_id) }}
+								</div>
+								<!-- Add the image field -->
+								<div class="form-group">
+									{{ form_label(movieform.imageFile) }}
+									{{ form_widget(movieform.imageFile) }}
+								</div>
+								{# <div class="form-group">
+																																																																																																	{{ form_label(movieform.image_name) }}
+																																																																																																	{{ form_widget(movieform.image_name) }}
+																																																																																																</div> #}
+
+							</div>
+						</div>
+					</div>
+
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<button type="submit" class="btn btn-primary">Submit</button>
+					</div>
+					{{ form_end(movieform) }}
+				</div>
+			</div>
+		</div>
+		<div class="modal" id="cat-modal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Add New Category</h5>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+
+					<div class="modal-body">
+						<div class="row">
+							<div class="col-lg-12 mt-3">
+								{{ form_start(categoryform) }}
+								<div class="form-group">
+									{{ form_label(categoryform.category_name) }}
+									{{ form_widget(categoryform.category_name) }}
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<button type="submit" class="btn btn-primary">Submit</button>
+					</div>
+					{{ form_end(categoryform) }}
+				</div>
+			</div>
+		</div>
+
+		<div class="modal" id="direct-modal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Add New Director</h5>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+
+					<div class="modal-body">
+						<div class="row">
+							<div class="col-lg-12 mt-3">
+								{{ form_start(directorform) }}
+								<div class="form-group">
+									{{ form_label(directorform.director_name) }}
+									{{ form_widget(directorform.director_name) }}
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<button type="submit" class="btn btn-primary">Submit</button>
+					</div>
+					{{ form_end(directorform) }}
+				</div>
+			</div>
+		</div>
+		<div class="modal" id="crew-modal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Add Crew Details</h5>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+
+					<div class="modal-body">
+						<div class="row">
+							<div class="col-lg-12 mt-3">
+								{{ form_start(crewform) }}
+								<div class="form-group">
+									{{ form_label(crewform.crew_name) }}
+									{{ form_widget(crewform.crew_name) }}
+								</div>
+								<div class="form-group">
+									{{ form_label(crewform.crew_role) }}
+									{{ form_widget(crewform.crew_role) }}
+								</div>
+								<div class="form-group">
+									{{ form_label(crewform.movie_id) }}
+									{{ form_widget(crewform.movie_id) }}
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<button type="submit" class="btn btn-primary">Submit</button>
+					</div>
+					{{ form_end(crewform) }}
+				</div>
+			</div>
+		</div>
+
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12 mt-3">
+					<button type="button" class="btn btn-warning" onclick="openModal('my-modal')">Add New Movie</button>
+					<button type="button" class="btn btn-warning" onclick="openModal('cat-modal')">Add Category</button>
+					<button type="button" class="btn btn-warning" onclick="openModal('direct-modal')">Add Director</button>
+					<button type="button" class="btn btn-warning" onclick="openModal('crew-modal')">Add Crew</button>
+					<button type="button" class="btn btn-info" onclick="toggleHideItem()">Edit Movies</button>
+
+				</div>
+			</div>
+
+			<div class="row" id="show-item">
+				<div class="col-lg-12 mt-3">
+					<table id="example1" class="table table-bordered table-striped" style="width:100%">
+						<thead id="new1">
+							<tr style="background-color:#cbefd4;">
+								<th class="first_num-head" style="">#<a style="cursor:default;">
+										<i class="fa fa-fw fa-question-circle" title="#"></i>
+									</a>
+								</th>
+
+								<th class="first-head" style="">Title<a style="cursor:default;">
+										<i class="fa fa-fw fa-question-circle" title="Title"></i>
+									</a>
+								</th>
+
+								<th class="eleve-head" style="">Director<a style="cursor:default;">
+										<i class="fa fa-fw fa-question-circle" title="Director"></i>
+									</a>
+								</th>
+
+								<th class="twelve-head" style="">Category<a style="cursor:default;">
+										<i class="fa fa-fw fa-question-circle" title="Category"></i>
+									</a>
+								</th>
+
+								<th class="second-head" style="">Budget<a style="cursor:default;">
+										<i class="fa fa-fw fa-question-circle" title="Budget"></i>
+									</a>
+								</th>
+
+								<th class="third-head" style="">Added Date<a style="cursor:default;">
+										<i class="fa fa-fw fa-question-circle" title="Added Date"></i>
+									</a>
+								</th>
+
+								<th class="fourth-head" style="">Description<a style="cursor:default;">
+										<i class="fa fa-fw fa-question-circle" title="Description"></i>
+									</a>
+								</th>
+								<th class="fourth-head" style="">Edit<a style="cursor:default;">
+										<i class="fa fa-fw fa-question-circle" title="Action"></i>
+									</a>
+								</th>
+							</tr>
+						</thead>
+					<tbody>
+							{% for movie in movies %}
+								<tr class="count_me">
+									<td class="first_num-col">{{ movie.movieId }}</td>
+									<td class="fourth-col ">{{ movie.title }}</td>
+									<td class="first-col">{{ directorNames[movie.movieId] }}</td>
+									<td class="eleve-col">{{ categoryNames[movie.movieId] }}</td>
+									<td class="twelve-col">{{ movie.budget }}</td>
+									<td class="second-col">{{ movie.addedDate|date('Y-m-d') }}</td>
+									<td class="third-col">{{ movie.descript }}</td>
+									<td class="fifth-col">
+										<form method="POST" action="{{ path('edit_movie', {'id': movie.movieId }) }}">
+											<input type="text" name="title" value="{{ movie.title }}">
+											<input type="text" name="budget" value="{{ movie.budget }}">
+											<input type="date" name="addedDate" value="{{ movie.addedDate|date('Y-m-d') }}">
+											<input type="text" name="descript" value="{{ movie.descript }}">
+											<select
+												name="directorId">
+												{# <option value="{{ movie.directorId }}">{{ directorNames[movie.directorId] }}</option> #}
+												{% for director in directors %}
+
+													<option value="{{ director.getDirectorId() }}" {% if director.getDirectorId() == movie.directorId %} selected {% endif %}>{{ director.getDirectorName() }}</option>
+
+												{% endfor %}
+											</select>
+											<select
+												name="categoryId">
+												{# <option value="{{ movie.categoryId }}">{{ categoryNames[movie.categoryId] }}</option> #}
+												{% for category in categories %}
+
+													<option value="{{ category.getCategoryId() }}" {% if category.getCategoryId() == movie.categoryId %} selected {% endif %}>{{ category.getCategoryName() }}</option>
+
+												{% endfor %}
+											</select>
+											<button type="submit" class="btn btn-primary">Edit</button>
+										</form>
+									</td>
+								</tr>
+							{% endfor %}
+						</tbody>
+
+
+					</table>
+				</div>
+			</div>
+
+		
+
+			<div class="row mt-3 mb-5" id="hide-item">
+				{% for movie in movies %}
+					<div class="col-lg-4">
+						<div class="card" style="width:350px">
+							<img
+							class="card-img-top" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT465u5huVhjtvrS4kkr5JmKVADqZklefs7MA&usqp=CAU" alt="Movie image" style="width:100%">
+
+							{# <img class="card-img-top" src="{{ asset('uploads/images/' imageNames[movie.movieId]) }}" alt="Movie image" style="width:100%"> #}
+
+							<div class="card-body">
+								<h4 class="card-title">{{ movie.title }}</h4>
+								<p class="card-text">{{ movie.descript }}</p>
+								<a href="{{ path('admin_edit', {'id': movie.movieId}) }}" class="btn btn-primary" target="_blank">See Profile</a>
+								<form method="POST" action="{{ path('delete_movie', {'id': movie.movieId }) }}">
+									<button type="submit" class="btn btn-danger">Delete</button>
+								</form>
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+
+		</div>
+	</section>
+
+{% endblock %}
