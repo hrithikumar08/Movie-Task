@@ -1,0 +1,126 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<header>
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<div class="container-fluid">
+				<button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+					<i class="fas fa-bars"></i>
+				</button>
+
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<a class="navbar-brand mt-2 mt-lg-0" href="#">
+						<img src="https://mdbcdn.b-cdn.net/img/logo/mdb-transaprent-noshadows.webp" height="15" alt="IMDB Logo" loading="lazy"/>
+					</a>
+					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+						<li class="nav-item">
+							<a class="nav-link" href="#">Dashboard</a>
+						</li>
+						{# <li class="nav-item">
+						            <a class="nav-link" href="#">Team</a>
+						          </li>
+						          <li class="nav-item">
+						            <a class="nav-link" href="#">Projects</a>
+						          </li> #}
+					</ul>
+				</div>
+
+				<div class="d-flex align-items-center">
+					<a class="text-reset me-3" href="#">
+						<i class="fas fa-shopping-cart"></i>
+					</a>
+
+					<div class="dropdown">
+          <span>Hi {{ userDashName}} !!</span>
+				</div>
+			</div>
+		</nav>
+	</header>
+	<div class="container">
+		<h1>Movie Details</h1>
+		<ul>
+			<li>
+				<strong>Title:</strong>
+				{{ movie.title }}</li>
+			<li>
+				<strong>Director:</strong>
+				{# {{ movie.directorId }}</li> #}
+				{{ directorName }}</li>
+			<li>
+				<strong>Category:</strong>
+				{# {{ movie.categoryId }}</li> #}
+				{{ categoryName }}</li>
+			<li>
+				<strong>Budget:</strong>
+				{{ movie.budget }}</li>
+			<li>
+				<strong>Added Date:</strong>
+				{{ movie.addedDate|date('Y-m-d H:i:s') }}</li>
+			<li>
+				<strong>Description:</strong>
+				{{ movie.descript }}</li>
+		</ul>
+
+		<hr>
+		<div class="col-md-12 col-lg-10 col-xl-8 mb-5">
+			<div
+				class="card">
+				{% for commentdetail in commentdetails %}
+					<div class="card-body">
+						<div class="d-flex flex-start align-items-center">
+							<img class="rounded-circle shadow-1-strong me-3" src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(32).webp" alt="avatar" width="60" height="60"/>
+							<div>
+								<h6 class="fw-bold text-primary mb-1">{{ userNames[commentdetail.userId] }}</h6>
+								{# <h6 class="fw-bold text-primary mb-1">{{ commentdetail.userId }}</h6> #}
+								<p class="text-muted small mb-0">
+									Shared on
+									{{ commentdetail.CommentDate.format('Y-m-d') }}
+								</p>
+							</div>
+						</div>
+
+						<p class="mt-3 mb-4 pb-2">
+							{{ commentdetail.getComment() }}
+						</p>
+
+						<div class="static-rating">
+							{% set ratingValue = commentdetail.getRating() %}
+
+							{% for rating in 1..5 %}
+								<span class="star{% if rating <= ratingValue %} rated{% endif %}" data-rating="{{ rating }}">&#9733;</span>
+							{% endfor %}
+
+							<input type="hidden" name="static_rating" id="static_rating" value="{{ ratingValue }}">
+						</div>
+					</div>
+				{% endfor %}
+
+
+				<div class="card-footer py-3 border-0" style="background-color: #f8f9fa;">
+					<div class="d-flex flex-start w-100">
+						<img class="rounded-circle shadow-1-strong me-3" src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(32).webp" alt="avatar" width="40" height="40"/>
+						<form action="{{ path('movie_submit', {'id': movie.movieId, 'userid': userid}) }}" method="POST">
+							<div class="form-outline w-100">
+								<textarea class="form-control" id="textAreaExample" rows="4" cols="80" style="background: #fff;" name="comment" {% if commentdetail is not null %} disabled {% endif %}></textarea>
+								<label class="form-label" for="textAreaExample">Comment</label>
+							</div>
+						</div>
+						<div class="interactive-rating">
+							<span class="star" data-rating="1">&#9733;</span>
+							<span class="star" data-rating="2">&#9733;</span>
+							<span class="star" data-rating="3">&#9733;</span>
+							<span class="star" data-rating="4">&#9733;</span>
+							<span class="star" data-rating="5">&#9733;</span>
+							<input type="hidden" name="interactive_rating" id="interactive_rating" value="">
+						</div>
+
+						<div class="float-end mt-2 pt-1">
+							<button type="submit" class="btn btn-primary btn-sm" {% if commentdetail is not null %} disabled {% endif %}>Post comment</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+	</div>
+{% endblock %}
